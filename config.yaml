@@ -1,0 +1,13 @@
+config:
+  target: https://thailand.pilaproject.org/teacher
+  # Load the Playwright engine:
+  engines:
+    playwright: {}
+  # Path to JavaScript file that defines Playwright test functions
+  processor: './flows.js'
+  phases:
+    - duration: 10
+      arrivalCount: 60
+scenarios:
+  - engine: playwright
+    testFunction: 'helloFlow'
