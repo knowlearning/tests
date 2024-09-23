@@ -1,13 +1,18 @@
 config:
-  target: https://thailand.pilaproject.org/teacher
+  target: https://f74e9cb3-2b53-4c85-9b0c-f1d61b032b3f.localhost:9898
+  tls:
+    rejectUnauthorized: false
   # Load the Playwright engine:
   engines:
-    playwright: {}
+    playwright:
+      contextOptions:
+        ignoreHTTPSErrors: true
   # Path to JavaScript file that defines Playwright test functions
   processor: './flows.js'
   phases:
-    - duration: 10
-      arrivalCount: 60
+    - duration: 30
+      arrivalCount: 1000
+      maxVusers: 10
 scenarios:
   - engine: playwright
     testFunction: 'helloFlow'
