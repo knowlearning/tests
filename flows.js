@@ -1,18 +1,22 @@
 module.exports = { helloFlow } 
 
-async function helloFlow(page) {
+async function helloFlow(page, vuContext, events, test) {
+  const { step } = test
+
   const localPILA = 'https://f74e9cb3-2b53-4c85-9b0c-f1d61b032b3f.localhost:9898'
-  const localAdmin = 'https://localhost:5111'
-  const target = localPILA
-  await page.goto(target)
-  await page.waitForSelector('#login-page')
+  const localAdmin = 'https://localhost:5012'
+  const target = localAdmin // 'http://localhost:5173'
 
-  console.log('GOTLOGIN PAGE???')
-  console.log('GOTLOGIN PAGE???---', await page.locator('#login-page').count())
+  await step('load', async () => {
+    await page.goto(target)
+  })
 
-  if (await page.locator('#login-page').count() === 0) {
-    throw new Error('No login page!')
-  }
+  await step('authenticated', async () => {
+    const selector = '.v-btn' // '#counter' // 
+    await page.waitForSelector(selector)  
+  })
+
+  console.log('GOT LOGIN PAGE???')
 
   // TODO: how do we know the metrics for how long it takes to get to here?
 }

@@ -1,5 +1,5 @@
 config:
-  target: https://f74e9cb3-2b53-4c85-9b0c-f1d61b032b3f.localhost:9898
+  target: http://localhost:5012
   tls:
     rejectUnauthorized: false
   # Load the Playwright engine:
@@ -12,7 +12,7 @@ config:
   phases:
     - duration: 30
       arrivalCount: 1000
-      maxVusers: 10
+      maxVusers: 1
 scenarios:
   - engine: playwright
     testFunction: 'helloFlow'
