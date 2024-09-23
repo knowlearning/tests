@@ -7,12 +7,18 @@ config:
     playwright:
       contextOptions:
         ignoreHTTPSErrors: true
+        storageState:
+          origins:
+          - origin: https://localhost:5012
+            localStorage:
+            - name: api
+              value: local
   # Path to JavaScript file that defines Playwright test functions
   processor: './flows.js'
   phases:
     - duration: 30
       arrivalCount: 1000
-      maxVusers: 1
+      maxVusers: 40
 scenarios:
   - engine: playwright
     testFunction: 'helloFlow'
