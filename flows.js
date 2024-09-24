@@ -16,7 +16,5 @@ async function helloFlow(page, vuContext, events, test) {
     await page.waitForSelector(selector)  
   })
 
-  console.log('GOT LOGIN PAGE???')
-
   // TODO: how do we know the metrics for how long it takes to get to here?
 }
