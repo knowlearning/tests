@@ -1,1 +1,1 @@
-artillery run config.yaml
+artillery run ./artillery/config.yaml
