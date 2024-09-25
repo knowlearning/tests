@@ -1,7 +1,5 @@
 config:
-  #target: https://f74e9cb3-2b53-4c85-9b0c-f1d61b032b3f.localhost:9898
-  target: https://localhost:5012
-  #target: http://localhost:5173
+  target: '{{ $env.TEST_SITE_URL }}'
   tls:
     rejectUnauthorized: false
   # Load the Playwright engine:
@@ -11,12 +9,13 @@ config:
         ignoreHTTPSErrors: true
         storageState:
           origins:
-          - origin: https://localhost:5012
+          - origin: '{{ $env.TEST_SITE_URL }}'
             localStorage:
             - name: api
               value: local
-  # Path to JavaScript file that defines Playwright test functions
-  processor: './flows.js'
+            - name: API_HOST
+              value: '{{ $env.API_HOST }}'
+  processor: './test-functions.js'
   phases:
     - duration: 30
       arrivalCount: 1000
