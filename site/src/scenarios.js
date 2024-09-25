@@ -1,7 +1,8 @@
 export async function authenticate() {
   const start = Date.now()
-  const environment = await Agent.environment()
+  await Agent.environment()
   const end = Date.now()
-  //  TODO: report back metrics!
-  console.log('Metrics to send back!', end - start)
+
+  await __report_metric('histogram', 'authentication', end - start)
+  await __report_done()
 }
