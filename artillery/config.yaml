@@ -17,9 +17,10 @@ config:
               value: '{{ $env.API_HOST }}'
   processor: './test-functions.js'
   phases:
-    - duration: 30
-      arrivalCount: 1000
-      maxVusers: 3
+  - duration: 30
+    arrivalCount: 1000
+    maxVusers: 3
 scenarios:
-  - engine: playwright
-    testFunction: 'helloFlow'
+- name: /authenticate
+  engine: playwright
+  testFunction: proxy
