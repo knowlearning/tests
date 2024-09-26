@@ -1,4 +1,4 @@
 export TEST_SITE_URL=https://tests.knowlearning.systems
-export API_HOST=localhost:32001
+export API_HOST=api.knowlearning.systems
 
 artillery run ./artillery/config.yaml

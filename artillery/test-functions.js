@@ -9,8 +9,6 @@ async function proxy(page, vuContext, events, test) {
   })
 
   await page.exposeFunction('__report_done', resolve)
-
-  console.log('GOING TO', vuContext.scenario.name)
   await page.goto(vuContext.scenario.name)
 
   await done

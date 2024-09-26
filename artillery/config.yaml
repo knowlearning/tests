@@ -11,16 +11,14 @@ config:
           origins:
           - origin: '{{ $env.TEST_SITE_URL }}'
             localStorage:
-            - name: api
-              value: local
             - name: API_HOST
               value: '{{ $env.API_HOST }}'
   processor: './test-functions.js'
   phases:
-  - duration: 30
-    arrivalCount: 1000
-    maxVusers: 3
+  - name: initialize
+    duration: 30
+    arrivalRate: 3
 scenarios:
-- name: /authenticate
+- name: /authenticateAndWait10s
   engine: playwright
   testFunction: proxy
