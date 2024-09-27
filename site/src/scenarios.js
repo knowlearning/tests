@@ -49,7 +49,7 @@ export async function write1SQLBackedUpdatePerSecond() {
 
   const scope = await Agent.state(id)
   scope.update = 0
-  for (let i=0; i<300; i++) {
+  for (let i=0; i<30; i++) {
     await new Promise(r => setTimeout(r, 1000))
     scope.update += 1
   }
@@ -65,9 +65,16 @@ export async function write1SQLBackedUpdatePerSecond() {
 
 export async function querySQLBackedScope() {
   const start = Date.now()
-  const results = await Agent.query('test_items')
+
+  for (let i=0; i<30; i++) {
+    await new Promise(r => setTimeout(r, 1000))
+    const results = await Agent.query('test_items')
+    scope.update += 1
+  }
+
   await Agent.environment()
   const end = Date.now()
 
   await __report_metric('histogram', 'got simply query results', end - start)
+  await __report_done()
 }
