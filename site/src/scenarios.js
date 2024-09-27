@@ -69,7 +69,6 @@ export async function querySQLBackedScope() {
   for (let i=0; i<30; i++) {
     await new Promise(r => setTimeout(r, 1000))
     const results = await Agent.query('test_items')
-    scope.update += 1
   }
 
   await Agent.environment()
