@@ -15,10 +15,20 @@ config:
               value: '{{ $env.API_HOST }}'
   processor: './test-functions.js'
   phases:
-  - name: initialize
+  - name: create_sql_data
     duration: 30
     arrivalRate: 3
+    scenarios:
+    - write1SQLBackedUpdatePerSecond
+  - name: query_sql_data
+    duration: 30
+    arrivalRate: 3
+    scenarios:
+    - querySQLBackedScope
 scenarios:
 - name: write1SQLBackedUpdatePerSecond
+  engine: playwright
+  testFunction: proxy
+- name: querySQLBackedScope
   engine: playwright
   testFunction: proxy
