@@ -19,6 +19,6 @@ config:
     duration: 30
     arrivalRate: 3
 scenarios:
-- name: /authenticateAndWait10s
+- name: authenticate
   engine: playwright
   testFunction: proxy
