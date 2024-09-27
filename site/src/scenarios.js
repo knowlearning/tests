@@ -44,7 +44,7 @@ export async function write1SQLBackedUpdatePerSecond() {
   await __report_metric('histogram', 'authentication', end - start)
 
   const id = await Agent.create({
-    type: 'application/json;type=test_item'
+    active_type: 'application/json;type=test_item'
   })
 
   const scope = await Agent.state(id)
