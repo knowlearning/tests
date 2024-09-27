@@ -19,6 +19,6 @@ config:
     duration: 30
     arrivalRate: 3
 scenarios:
-- name: authenticate
+- name: write1PerSecond
   engine: playwright
   testFunction: proxy

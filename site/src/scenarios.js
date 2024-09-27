@@ -12,3 +12,26 @@ async function authenticateAndWait(seconds) {
   await new Promise(r => setTimeout(r, seconds * 1000))
   await __report_done()
 }
+
+export async function write1PerSecond() {
+  const start = Date.now()
+  await Agent.environment()
+  const end = Date.now()
+
+  await __report_metric('histogram', 'authentication', end - start)
+
+  const scope = await Agent.state('test')
+  scope.update = 0
+  for (let i=0; i<300; i++) {
+    await new Promise(r => setTimeout(r, 100))
+    scope.update += 1
+  }
+
+  const startSync = Date.now()
+  await Agent.synced()
+  const endSync = Date.now()
+
+  await __report_metric('histogram', 'synced after updates', endSync - startSync)
+
+  await __report_done()
+}
