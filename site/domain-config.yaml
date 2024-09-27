@@ -1,0 +1,69 @@
+authorize:
+  sameDomain:
+    postgres: same_domain_authorization
+  crossDomain:
+    postgres: cross_domain_authorization
+postgres:
+  tables:
+    test_items:
+      type: application/json;type=test_item
+      columns:
+        update: INTEGER
+        description: TEXT
+  functions:
+    same_domain_authorization:
+      returns: BOOLEAN
+      language: PLpgSQL
+      body: |
+        BEGIN
+          RETURN TRUE;
+        END;
+      arguments:
+      - name: requestingUser
+        type: TEXT
+      - name: requestedScope
+        type: TEXT
+    cross_domain_authorization:
+      returns: BOOLEAN
+      language: PLpgSQL
+      body: |
+        BEGIN
+          RETURN TRUE;
+        END;
+      arguments:
+      - name: requestingDomain
+        type: TEXT
+      - name: requestingUser
+        type: TEXT
+      - name: requestedScope
+        type: TEXT
+  queries:
+    test_items: SELECT * FROM test_items LIMIT 100
+agent: |
+  import Agent, { getAgent } from 'npm:@knowlearning/agents/deno.js'
+
+  const TagAgent = getAgent('tags.knowlearning.systems')
+
+  const agentTags = await TagAgent.state('tags')
+
+  function addTag(tagId, contentId) {
+    if (!agentTags.value[tagId]) agentTags.value[tagId] = {}
+    agentTags.value[tagId][contentId] = true
+  }
+
+  Agent.on('child', child => {
+    const { environment: { user } } = child
+
+    child.on('mutate', ({ scope, patch }) => {
+      if (scope === 'tags') {
+        patch.forEach(async ({ path, value:patchValue }) => {
+          if (path.length === 2) {
+            const [ tagId, contentId ] = path
+            const { value, partition=user } = patchValue
+            if (!agentTags[tagId]) agentTags[tagId] = {}
+            agentTags[tagId][contentId] = { contributor: user, partition, value }
+          }
+        })
+      }
+    })
+  })

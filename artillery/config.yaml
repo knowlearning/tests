@@ -19,6 +19,6 @@ config:
     duration: 30
     arrivalRate: 3
 scenarios:
-- name: write1PerSecond
+- name: write1SQLBackedUpdatePerSecond
   engine: playwright
   testFunction: proxy
