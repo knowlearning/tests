@@ -38,7 +38,7 @@ postgres:
       - name: requestedScope
         type: TEXT
   queries:
-    test_items: SELECT * FROM test_items LIMIT 100
+    test_items: SELECT * FROM test_items LIMIT 1
 agent: |
   import Agent, { getAgent } from 'npm:@knowlearning/agents/deno.js'
 

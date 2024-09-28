@@ -64,16 +64,16 @@ export async function write1SQLBackedUpdatePerSecond() {
 }
 
 export async function querySQLBackedScope() {
-  const start = Date.now()
 
   for (let i=0; i<30; i++) {
     await new Promise(r => setTimeout(r, 1000))
+    const start = Date.now()
     const results = await Agent.query('test_items')
+    const end = Date.now()
+    await __report_metric('histogram', 'got simple query results', end - start)
   }
 
   await Agent.environment()
-  const end = Date.now()
 
-  await __report_metric('histogram', 'got simply query results', end - start)
   await __report_done()
 }
