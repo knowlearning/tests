@@ -44,11 +44,11 @@ export async function write1SQLBackedUpdatePerSecond() {
   await __report_metric('histogram', 'authentication', end - start)
 
   const id = await Agent.create({
-    active_type: 'application/json;type=test_item'
+    active_type: 'application/json;type=test_item',
+    active: { update: 0 }
   })
 
   const scope = await Agent.state(id)
-  scope.update = 0
   for (let i=0; i<30; i++) {
     await new Promise(r => setTimeout(r, 1000))
     scope.update += 1
