@@ -13,22 +13,21 @@ config:
             localStorage:
             - name: API_HOST
               value: '{{ $env.API_HOST }}'
+            - name: sid
+              value: '{{ $env.API_HOST }}'
+          # cookies:
+          # - name: "sid"
+          #   value: "12345"
+          #   domain: "thailand.pilaproject.org"
+          #   path: "/"
+          #   httpOnly: true
+          #   secure: true
   processor: './test-functions.js'
   phases:
-  - name: create_sql_data
-    duration: 30
-    arrivalRate: 3
-    scenarios:
-    - write1SQLBackedUpdatePerSecond
-  - name: query_sql_data
-    duration: 30
-    arrivalRate: 3
-    scenarios:
-    - querySQLBackedScope
+  - name: Load PILA App
+    duration: 60
+    arrivalRate: 2
 scenarios:
-- name: write1SQLBackedUpdatePerSecond
+- name: Agent Environment Load
   engine: playwright
-  testFunction: proxy
-- name: querySQLBackedScope
-  engine: playwright
-  testFunction: proxy
+  testFunction: agentEnvironmentLoad
